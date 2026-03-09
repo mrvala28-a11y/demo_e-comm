@@ -1,8 +1,7 @@
 /**
- * UI Module - Handles all UI rendering functions
+ * UI Module - Handles UI rendering
  */
 
-// DOM Elements
 const productsGrid = document.getElementById('products-grid');
 const productSlider = document.getElementById('product-slider');
 const toastContainer = document.getElementById('toast-container');
@@ -11,13 +10,6 @@ const errorMessage = document.getElementById('error-message');
 const noResults = document.getElementById('no-results');
 const productCount = document.getElementById('product-count');
 
-// Current state
-let currentProducts = [];
-let currentSort = 'default';
-
-/**
- * Show/hide loading
- */
 function showLoading() {
     if (loadingOverlay) loadingOverlay.classList.remove('hidden');
 }
@@ -46,9 +38,6 @@ function hideNoResults() {
     if (productsGrid) productsGrid.classList.remove('hidden');
 }
 
-/**
- * Generate star rating HTML
- */
 function generateStars(rating) {
     let starsHtml = '';
     const fullStars = Math.floor(rating);
@@ -66,16 +55,12 @@ function generateStars(rating) {
     return starsHtml;
 }
 
-/**
- * Create a product card element
- */
 function createProductCard(product) {
     const { id, title, price, discountPercentage, rating, thumbnail, category } = product;
     const discountedPrice = (price - (price * discountPercentage / 100)).toFixed(2);
     
     const card = document.createElement('div');
     card.className = 'product-card';
-    card.dataset.productId = id;
     card.style.animationDelay = `${Math.random() * 0.3}s`;
     
     const isWishlisted = isInWishlist(id);
@@ -111,14 +96,10 @@ function createProductCard(product) {
     return card;
 }
 
-/**
- * Render products to grid
- */
 function renderProducts(products) {
     if (!productsGrid) return;
     
     productsGrid.innerHTML = '';
-    currentProducts = products;
     
     if (products.length === 0) {
         showNoResults();
@@ -130,55 +111,17 @@ function renderProducts(products) {
     hideError();
     if (productCount) productCount.textContent = `Showing ${products.length} products`;
     
-    // Sort products
-    let sortedProducts = [...products];
-    sortProducts(sortedProducts);
-    
-    // Render with animation
-    sortedProducts.forEach((product, index) => {
+    products.forEach((product, index) => {
         const card = createProductCard(product);
         productsGrid.appendChild(card);
-        
-        setTimeout(() => {
-            card.classList.add('loaded');
-        }, index * 50);
+        setTimeout(() => card.classList.add('loaded'), index * 50);
     });
 }
 
-/**
- * Sort products
- */
-function sortProducts(products) {
-    switch (currentSort) {
-        case 'price-low':
-            products.sort((a, b) => {
-                const priceA = a.price - (a.price * a.discountPercentage / 100);
-                const priceB = b.price - (b.price * b.discountPercentage / 100);
-                return priceA - priceB;
-            });
-            break;
-        case 'price-high':
-            products.sort((a, b) => {
-                const priceA = a.price - (a.price * a.discountPercentage / 100);
-                const priceB = b.price - (b.price * b.discountPercentage / 100);
-                return priceB - priceA;
-            });
-            break;
-        case 'rating':
-            products.sort((a, b) => b.rating - a.rating);
-            break;
-    }
-}
-
-/**
- * Render product slider
- */
 function renderSlider(products) {
     if (!productSlider) return;
     
     productSlider.innerHTML = '';
-    
-    // Show first 8 products in slider
     const sliderProducts = products.slice(0, 8);
     
     sliderProducts.forEach(product => {
@@ -213,55 +156,20 @@ function renderSlider(products) {
     });
 }
 
-/**
- * Render skeleton cards
- */
-function renderSkeletonCards(count = 8) {
-    if (!productsGrid) return;
-    
-    productsGrid.innerHTML = '';
-    
-    for (let i = 0; i < count; i++) {
-        const skeleton = document.createElement('div');
-        skeleton.className = 'skeleton-card';
-        skeleton.innerHTML = `
-            <div class="skeleton-image skeleton"></div>
-            <div class="p-4">
-                <div class="skeleton skeleton-text short"></div>
-                <div class="skeleton skeleton-text medium"></div>
-                <div class="skeleton skeleton-text"></div>
-            </div>
-        `;
-        productsGrid.appendChild(skeleton);
-    }
-}
-
-/**
- * Show toast notification
- */
 function showToast(message, type = 'success') {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     
     const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
     
-    toast.innerHTML = `
-        <i class="fas ${icon}"></i>
-        <span>${message}</span>
-    `;
+    toast.innerHTML = `<i class="fas ${icon}"></i><span>${message}</span>`;
     
     if (toastContainer) {
         toastContainer.appendChild(toast);
-        
-        setTimeout(() => {
-            toast.remove();
-        }, 3000);
+        setTimeout(() => toast.remove(), 3000);
     }
 }
 
-/**
- * Animate add to cart button
- */
 function animateButton(button) {
     const originalText = button.innerHTML;
     button.innerHTML = '<i class="fas fa-check mr-2"></i>Added!';
@@ -273,7 +181,14 @@ function animateButton(button) {
     }, 1500);
 }
 
-// Make functions globally available
 window.generateStars = generateStars;
 window.createProductCard = createProductCard;
+window.showToast = showToast;
+window.showLoading = showLoading;
+window.hideLoading = hideLoading;
+window.showError = showError;
+window.hideError = hideError;
+window.showNoResults = showNoResults;
+window.hideNoResults = hideNoResults;
+window.animateButton = animateButton;
 

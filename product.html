@@ -4,44 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details - ModernShop</title>
-    
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
-    
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Tailwind Config -->
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    colors: {
-                        primary: '#6366F1',
-                        accent: '#F59E0B',
-                        background: '#F8FAFC',
-                        dark: '#1E293B',
-                        'dark-bg': '#0F172A',
-                        'dark-card': '#1E293B',
-                    },
-                    fontFamily: {
-                        poppins: ['Poppins', 'sans-serif'],
-                    }
+                    colors: { primary: '#6366F1', accent: '#F59E0B', background: '#F8FAFC', dark: '#1E293B', 'dark-bg': '#0F172A', 'dark-card': '#1E293B' },
+                    fontFamily: { poppins: ['Poppins', 'sans-serif'] }
                 }
             }
         }
     </script>
 </head>
-<body class="font-poppins bg-background text-dark dark:bg-dark-bg dark:text-white transition-colors duration-300">
+<body class="font-poppins bg-background text-dark dark:bg-dark-bg dark:text-white transition-colors">
     
     <!-- Loading -->
     <div id="loading-overlay" class="fixed inset-0 bg-white/80 dark:bg-dark-bg/80 backdrop-blur-sm z-50 flex items-center justify-center">
@@ -50,58 +31,74 @@
 
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 right-0 bg-white/80 dark:bg-dark-card/80 backdrop-blur-md shadow-sm z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4">
             <div class="flex items-center justify-between h-16 md:h-20">
-                <a href="index.html" class="flex items-center gap-2 group">
+                <a href="index.html" class="flex items-center gap-2">
                     <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
                         <i class="fas fa-shopping-bag text-white text-lg"></i>
                     </div>
                     <span class="text-2xl font-bold text-primary">ModernShop</span>
                 </a>
-                <div class="flex items-center gap-4">
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="index.html" class="nav-link text-gray-700 dark:text-gray-200 hover:text-primary">Home</a>
+                    <a href="index.html#shop" class="nav-link text-gray-700 dark:text-gray-200 hover:text-primary">Shop</a>
+                    <a href="wishlist.html" class="nav-link text-gray-700 dark:text-gray-200 hover:text-primary relative">Wishlist <span id="wishlist-count" class="absolute -top-2 -right-4 w-4 h-4 bg-accent text-white text-xs rounded-full hidden">0</span></a>
+                </div>
+                <div class="flex items-center gap-3">
                     <button id="dark-mode-toggle" class="p-2.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full">
-                        <i class="fas fa-moon text-gray-700 dark:text-yellow-400"></i>
+                        <i class="fas fa-moon text-gray-700 dark:text-yellow-400 text-lg"></i>
                     </button>
                     <a href="checkout.html" class="relative p-2.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full">
                         <i class="fas fa-shopping-cart text-gray-700 dark:text-gray-200"></i>
                         <span id="cart-count" class="absolute -top-1 -right-1 w-5 h-5 bg-accent text-white text-xs rounded-full flex items-center justify-center">0</span>
                     </a>
+                    <button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <i class="fas fa-bars text-gray-700 dark:text-gray-200 text-xl"></i>
+                    </button>
                 </div>
             </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-dark-card border-t px-4 py-4 space-y-3">
+            <a href="index.html" class="block py-2">Home</a>
+            <a href="index.html#shop" class="block py-2">Shop</a>
+            <a href="wishlist.html" class="block py-2">Wishlist</a>
+            <a href="checkout.html" class="block py-2">Cart</a>
+            <a href="about.html" class="block py-2">About</a>
+            <a href="contact.html" class="block py-2">Contact</a>
         </div>
     </nav>
 
     <!-- Product Details -->
     <main class="pt-24 pb-16 min-h-screen">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4">
             <!-- Breadcrumb -->
             <nav class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-8">
                 <a href="index.html" class="hover:text-primary">Home</a>
                 <i class="fas fa-chevron-right text-xs"></i>
-                <a href="#shop" class="hover:text-primary">Shop</a>
+                <a href="index.html#shop" class="hover:text-primary">Shop</a>
                 <i class="fas fa-chevron-right text-xs"></i>
                 <span id="product-category" class="text-primary">Product</span>
             </nav>
 
-            <!-- Product Content -->
-            <div id="product-details" class="grid md:grid-cols-2 gap-12">
-                <!-- Product images will be rendered here -->
-            </div>
+            <div id="product-details" class="grid md:grid-cols-2 gap-12"></div>
 
             <!-- Related Products -->
             <section class="mt-16">
-                <h2 class="text-2xl font-bold text-dark dark:text-white mb-8">Related Products</h2>
-                <div id="related-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Related products will be rendered here -->
-                </div>
+                <h2 class="text-2xl font-bold mb-8">Related Products</h2>
+                <div id="related-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
             </section>
         </div>
     </main>
 
-    <!-- Toast Container -->
+    <!-- Footer -->
+    <footer class="bg-dark dark:bg-black text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-400">
+            <p>&copy; 2024 ModernShop. All rights reserved.</p>
+        </div>
+    </footer>
+
     <div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-2"></div>
 
-    <!-- Scripts -->
     <script src="js/api.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/wishlist.js"></script>
@@ -109,34 +106,32 @@
     <script src="js/app.js"></script>
     
     <script>
-        // Initialize product page
+        let detailQty = 1;
+        let currentProduct = null;
+
         document.addEventListener('DOMContentLoaded', async () => {
             const urlParams = new URLSearchParams(window.location.search);
             const productId = urlParams.get('id');
             
-            if (!productId) {
-                window.location.href = 'index.html';
-                return;
-            }
+            if (!productId) { window.location.href = 'index.html'; return; }
             
             try {
-                // Load product
                 const product = await fetchSingleProduct(productId);
+                currentProduct = product;
                 renderProductDetails(product);
-                
-                // Load dark mode preference
                 initDarkMode();
                 updateCartCount();
                 updateWishlistCount();
                 
-                // Load related products
-                const data = await fetchProducts(8);
+                const data = await fetchProducts(20);
+                window.allProducts = data.products;
                 const related = data.products.filter(p => p.id !== parseInt(productId) && p.category === product.category);
                 renderRelatedProducts(related.slice(0, 4));
                 
+                setupMobileMenu();
                 hideLoading();
             } catch (error) {
-                console.error('Error loading product:', error);
+                console.error('Error:', error);
                 hideLoading();
                 showToast('Failed to load product', 'error');
             }
@@ -148,48 +143,41 @@
             
             const images = [product.thumbnail, ...(product.images || [])].slice(0, 5);
             const discountedPrice = (product.price - (product.price * product.discountPercentage / 100)).toFixed(2);
+            const isWishlisted = isInWishlist(product.id);
             
             container.innerHTML = `
-                <!-- Image Gallery -->
                 <div class="space-y-4">
                     <div class="aspect-square rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-800">
                         <img id="main-image" src="${images[0]}" alt="${product.title}" class="w-full h-full object-cover">
                     </div>
                     <div class="flex gap-3 overflow-x-auto pb-2">
                         ${images.map((img, i) => `
-                            <button onclick="changeImage('${img}', this)" class="thumb-btn w-20 h-20 rounded-lg overflow-hidden border-2 ${i === 0 ? 'border-primary' : 'border-transparent'} hover:border-primary transition-colors">
+                            <button onclick="changeImage('${img}', this)" class="thumb-btn w-20 h-20 rounded-lg overflow-hidden border-2 ${i === 0 ? 'border-primary' : 'border-transparent'} hover:border-primary transition-colors flex-shrink-0">
                                 <img src="${img}" alt="Thumbnail" class="w-full h-full object-cover">
                             </button>
                         `).join('')}
                     </div>
                 </div>
                 
-                <!-- Product Info -->
                 <div class="space-y-6">
                     <div>
                         <span class="text-sm text-primary font-medium uppercase">${product.category}</span>
-                        <h1 class="text-3xl md:text-4xl font-bold text-dark dark:text-white mt-2">${product.title}</h1>
+                        <h1 class="text-3xl md:text-4xl font-bold mt-2">${product.title}</h1>
                     </div>
                     
-                    <!-- Rating -->
                     <div class="flex items-center gap-3">
-                        <div class="flex text-accent">
-                            ${generateStars(product.rating)}
-                        </div>
-                        <span class="text-gray-500 dark:text-gray-400">${product.rating} (${product.stock} reviews)</span>
+                        <div class="flex text-accent">${generateStars(product.rating)}</div>
+                        <span class="text-gray-500">${product.rating} (${product.stock} reviews)</span>
                     </div>
                     
-                    <!-- Price -->
                     <div class="flex items-center gap-4">
                         <span class="text-4xl font-bold text-primary">$${discountedPrice}</span>
                         <span class="text-xl text-gray-400 line-through">$${product.price}</span>
                         <span class="px-3 py-1 bg-red-500 text-white rounded-full text-sm font-medium">-${Math.round(product.discountPercentage)}% OFF</span>
                     </div>
                     
-                    <!-- Description -->
                     <p class="text-gray-600 dark:text-gray-300 leading-relaxed">${product.description}</p>
                     
-                    <!-- Stock -->
                     <div class="flex items-center gap-2">
                         <span class="text-gray-600 dark:text-gray-400">Stock:</span>
                         <span class="${product.stock > 10 ? 'text-green-500' : product.stock > 0 ? 'text-orange-500' : 'text-red-500'} font-medium">
@@ -197,7 +185,6 @@
                         </span>
                     </div>
                     
-                    <!-- Quantity -->
                     <div class="flex items-center gap-4">
                         <span class="text-gray-600 dark:text-gray-400">Quantity:</span>
                         <div class="flex items-center border border-gray-200 dark:border-gray-600 rounded-lg">
@@ -207,20 +194,16 @@
                         </div>
                     </div>
                     
-                    <!-- Actions -->
                     <div class="flex gap-4 pt-4">
                         <button onclick="addToCartFromDetail(${product.id})" class="flex-1 py-4 bg-primary text-white font-semibold rounded-xl hover:bg-primary/90 transition-colors">
                             <i class="fas fa-shopping-cart mr-2"></i>Add to Cart
                         </button>
                         <button onclick="toggleWishlist(${product.id})" class="px-4 py-4 border-2 border-gray-200 dark:border-gray-600 rounded-xl hover:border-primary hover:text-primary transition-colors" id="wishlist-btn-${product.id}">
-                            <i class="far fa-heart text-xl"></i>
+                            <i class="${isWishlisted ? 'fas' : 'far'} fa-heart text-xl"></i>
                         </button>
                     </div>
                 </div>
             `;
-            
-            // Update wishlist button state
-            updateWishlistButton(product.id);
         }
 
         function changeImage(src, btn) {
@@ -229,19 +212,13 @@
             btn.classList.add('border-primary');
         }
 
-        let detailQty = 1;
         function changeDetailQuantity(change) {
             detailQty = Math.max(1, detailQty + change);
             document.getElementById('detail-qty').textContent = detailQty;
         }
 
         function addToCartFromDetail(productId) {
-            const product = window.currentProduct;
-            if (!product) return;
-            
-            for (let i = 0; i < detailQty; i++) {
-                addToCart(productId);
-            }
+            for (let i = 0; i < detailQty; i++) { addToCart(productId); }
             showToast(`${detailQty} item(s) added to cart!`, 'success');
             detailQty = 1;
             document.getElementById('detail-qty').textContent = 1;
@@ -253,6 +230,14 @@
                 const card = createProductCard(product);
                 container.appendChild(card);
             });
+        }
+
+        function setupMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            if (btn && menu) {
+                btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+            }
         }
     </script>
 </body>
